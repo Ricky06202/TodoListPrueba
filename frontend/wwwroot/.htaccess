@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  
+  # Redirigir todo al index.html para manejar las rutas en el cliente (SPA)
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Asegurar que se puedan servir archivos de configuración y binarios de Blazor
+<IfModule mod_headers.c>
+  <FilesMatch "\.(wasm|dat|dll|json|js|blat|css|html|png|ico|json)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+</IfModule>
+
+# Tipos MIME necesarios para Blazor WebAssembly
+AddType application/wasm .wasm
+AddType application/octet-stream .dat
+AddType application/octet-stream .dll
+AddType application/json .json
+AddType application/javascript .js
