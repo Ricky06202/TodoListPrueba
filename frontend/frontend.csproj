@@ -4,9 +4,16 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
     <BlazorStaticWebAssetsFingerprintingEnabled>false</BlazorStaticWebAssetsFingerprintingEnabled>
+    <StaticWebAssetFingerprintingEnabled>false</StaticWebAssetFingerprintingEnabled>
+    <OverrideHtmlAssetPlaceholders>false</OverrideHtmlAssetPlaceholders>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\index.html">
+        <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0" />
