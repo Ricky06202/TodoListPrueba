@@ -1,0 +1,109 @@
+@page "/todo"
+@inject HttpClient Http
+
+<PageTitle>Mis Tareas - Todo Master</PageTitle>
+
+<div class="todo-container">
+    <!-- Header -->
+    <div class="header-section">
+        <h1 class="title">Mis Tareas</h1>
+        <p class="subtitle">Organiza tu día con facilidad.</p>
+    </div>
+
+    <!-- Input Section -->
+    <div class="input-section">
+        <div class="todo-input-container">
+            <div class="input-icon-wrapper">
+                <svg class="input-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+            </div>
+            <input @bind="newTaskTitle" @onkeyup="HandleKeyUp" type="text" placeholder="¿Qué tarea tienes pendiente?"
+                   class="todo-input-field" />
+            <button @onclick="AddTask" class="todo-add-button">
+                Agregar
+            </button>
+        </div>
+    </div>
+
+    <!-- List Section -->
+    <div class="todo-list">
+        @if (todos == null)
+        {
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Sincronizando tareas...</p>
+            </div>
+        }
+        else if (!todos.Any())
+        {
+            <div class="empty-state">
+                <div class="empty-icon-wrapper">
+                    <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 class="empty-title">¡Todo al día!</h3>
+                <p class="empty-desc">No tienes tareas pendientes por ahora. ¡Disfruta tu tiempo libre!</p>
+            </div>
+        }
+        else
+        {
+            <div class="todo-grid">
+                @foreach (var todo in todos)
+                {
+                    <TodoItemCard Todo="todo" OnToggle="UpdateTask" OnDelete="DeleteTask" />
+                }
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private List<TodoItem>? todos;
+    private string newTaskTitle = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTodos();
+    }
+
+    private async Task LoadTodos()
+    {
+        todos = await Http.GetFromJsonAsync<List<TodoItem>>("api/todos");
+    }
+
+    private async Task AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTaskTitle))
+        {
+            var newTodo = new TodoItem { Title = newTaskTitle, Completed = false };
+            var response = await Http.PostAsJsonAsync("api/todos", newTodo);
+            if (response.IsSuccessStatusCode)
+            {
+                newTaskTitle = "";
+                await LoadTodos();
+            }
+        }
+    }
+
+    private async Task UpdateTask(TodoItem todo)
+    {
+        await Http.PutAsJsonAsync($"api/todos/{todo.Id}", todo);
+        await LoadTodos();
+    }
+
+    private async Task DeleteTask(int id)
+    {
+        await Http.DeleteAsync($"api/todos/{id}");
+        await LoadTodos();
+    }
+
+    private async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await AddTask();
+        }
+    }
+}

@@ -1,0 +1,25 @@
+# --- PYTHON ---
+# Ignorar el entorno virtual
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- C# / .NET ---
+# Ignorar carpetas de compilación
+[Bb]in/
+[Oo]bj/
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+
+# --- OTROS ---
+# Archivos del sistema y logs
+.DS_Store
+Thumbs.db
+*.log
+.env

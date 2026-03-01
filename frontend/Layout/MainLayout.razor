@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+<div class="layout-container">
+    <!-- Navbar -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <span class="logo-text">Todo Master</span>
+            </div>
+            
+            <nav class="nav-links">
+                <NavLink href="/" class="nav-link" Match="NavLinkMatch.All">Inicio</NavLink>
+                <NavLink href="/todo" class="nav-link">Tareas</NavLink>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <main class="main-content">
+        <div class="container">
+            @Body
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            &copy; 2026 Todo Master. Hecho con Blazor y CSS Puro.
+        </div>
+    </footer>
+</div>
