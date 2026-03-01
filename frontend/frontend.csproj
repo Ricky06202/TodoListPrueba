@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <OverrideHtmlAssetPlaceholders>true</OverrideHtmlAssetPlaceholders>
-    <BlazorWebAssemblyEnableStaticWebAssetsFingerprinting>false</BlazorWebAssemblyEnableStaticWebAssetsFingerprinting>
+    <BlazorStaticWebAssetsFingerprintingEnabled>false</BlazorStaticWebAssetsFingerprintingEnabled>
   </PropertyGroup>
 
   <ItemGroup>
