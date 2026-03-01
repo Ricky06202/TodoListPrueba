@@ -1,24 +1,22 @@
 import os
 import sys
 
-# 1. Configurar la ruta para que encuentre main.py y las librerías
-INTERP = os.path.expanduser("~/api-todolistblazor.rsanjur.com/venv/bin/python")
-if sys.executable != INTERP:
-    os.execl(INTERP, INTERP, *sys.argv)
-
+# 1. Aseguramos que la carpeta actual esté en el PATH
 sys.path.insert(0, os.path.dirname(__file__))
 
-# 2. Sistema de logging para cazar errores (si los hay)
+# 2. Sistema de logging básico
 def write_error(msg):
-    with open(os.path.join(os.path.dirname(__file__), 'error_log.txt'), 'a') as f:
+    log_path = os.path.join(os.path.dirname(__file__), 'error_log.txt')
+    with open(log_path, 'a') as f:
         import datetime
         f.write(f"[{datetime.datetime.now()}] {msg}\n")
 
+# 3. Importación y arranque
 try:
     from a2wsgi import ASGIMiddleware
     from main import app
     
-    # 3. Punto de entrada para Passenger (WSGI)
+    # Este es el objeto que busca Passenger
     application = ASGIMiddleware(app)
     
 except Exception:
@@ -27,5 +25,5 @@ except Exception:
     write_error(error_msg)
     
     def application(environ, start_response):
-        start_response('500 Internal Error', [('Content-Type', 'text/plain')])
-        return [f"Error detectado:\n\n{error_msg}".encode('utf-8')]
+        start_response('500 Error', [('Content-Type', 'text/plain')])
+        return [f"ERROR DE ARRANQUE:\n\n{error_msg}".encode('utf-8')]
