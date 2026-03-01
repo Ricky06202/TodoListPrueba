@@ -26,6 +26,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"message": "Todo Master API is running!"}
+
 @app.get("/api/todos", response_model=List[Todo])
 async def get_todos():
     return todos_db

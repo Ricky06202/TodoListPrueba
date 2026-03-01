@@ -2,7 +2,11 @@
   RewriteEngine On
   RewriteBase /
   
-  # Redirigir todo al index.html para manejar las rutas en el cliente (SPA)
+  # NO redirigir si el archivo es parte del framework de Blazor y no existe
+  RewriteCond %{REQUEST_URI} ^/_framework/.*
+  RewriteRule ^_framework/ - [L]
+
+  # Redirigir todo lo demás al index.html para manejar las rutas en el cliente (SPA)
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
