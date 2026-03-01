@@ -17,7 +17,7 @@ jobs:
           dotnet-version: '10.0.x' # Cambia a 9.0 si ya la usas
 
       - name: Publish Blazor
-        run: dotnet publish frontend/TuProyecto.csproj -c Release -o release-folder
+        run: dotnet publish frontend/ -c Release -o release-folder
 
       - name: Deploy Frontend to cPanel (FTP)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
