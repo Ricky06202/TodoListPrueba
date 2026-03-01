@@ -1,12 +1,8 @@
-import os
-import sys
-
-# Aseguramos que Python encuentre main.py
-sys.path.insert(0, os.path.dirname(__file__))
-
-# Importaciones a nivel de módulo (Passenger las carga UNA vez al arrancar)
-from a2wsgi import ASGIMiddleware
-from main import app
-
-# Objeto que busca Passenger - se crea una sola vez
-application = ASGIMiddleware(app)
+def application(environ, start_response):
+    status = '200 OK'
+    text = '¡Hola Mundo! El Python 3.9 en cPanel esta VIVO.'
+    output = text.encode('utf-8')
+    response_headers = [('Content-Type', 'text/plain; charset=utf-8'),
+                        ('Content-Length', str(len(output)))]
+    start_response(status, response_headers)
+    return [output]
