@@ -41,4 +41,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./backend/ # Subimos la carpeta tal cual
-          server-dir: /apitodolistblazor.rsanjur.com/ # Tu subdominio o carpeta de la App Python
+          server-dir: /api-todolistblazor.rsanjur.com/ # Tu subdominio o carpeta de la App Python
